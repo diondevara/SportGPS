@@ -11,11 +11,13 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -103,7 +105,9 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        TextView TextSteps;
+        TextSteps = (TextView)findViewById(R.id.TextSteps);
+        TextSteps.setText(String.valueOf(total_step));
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
         CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, timestart, lat, lng, komen, komen2, timestamp, pic, timestop, total_step);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
