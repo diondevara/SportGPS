@@ -13,6 +13,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -49,15 +53,22 @@ public class MainRecording extends AppCompatActivity {
     LocationListener ll;
     JSONObject jsonObject;
     JSONArray gambar,komentar,lokasi;
+    Sensor stepsensor;
+    SensorManager mSensorManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mSensorManager =
+                (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        stepsensor = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+
         jsonObject = new JSONObject();
         gambar= new JSONArray();
         komentar = new JSONArray();
         lokasi = new JSONArray();
         Date c = Calendar.getInstance().getTime();
+
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
         try {
             jsonObject.put("startDate", df.format(c));
@@ -114,6 +125,7 @@ public class MainRecording extends AppCompatActivity {
 
             }
         };
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -186,11 +198,11 @@ public class MainRecording extends AppCompatActivity {
                     //store this shit textdialog
                     Date c = Calendar.getInstance().getTime();
                     SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-                    JSONObject temp= new JSONObject();
+                    JSONObject tempkoment= new JSONObject();
                     try {
-                        temp.put("date",df.format(c));
-                        temp.put("komentar",textdialog.getText().toString());
-                        komentar.put(temp);
+                        tempkoment.put("date",df.format(c));
+                        tempkoment.put("komentar",textdialog.getText().toString());
+                        komentar.put(tempkoment);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -224,11 +236,11 @@ public class MainRecording extends AppCompatActivity {
         bm = (Bitmap)datanya.getExtras().get("data");
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        JSONObject temp= new JSONObject();
+        JSONObject tempcam= new JSONObject();
         try {
-            temp.put("date",df.format(c));
-            temp.put("gambar",bm);
-            komentar.put(temp);
+            tempcam.put("date",df.format(c));
+            tempcam.put("gambar",bm);
+            komentar.put(tempcam);
         } catch (JSONException e) {
             e.printStackTrace();
         }
