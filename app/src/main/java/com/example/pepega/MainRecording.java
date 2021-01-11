@@ -48,7 +48,7 @@ public class MainRecording extends AppCompatActivity {
     LocationManager locationManager;
     LocationListener ll;
     JSONObject jsonObject;
-    JSONArray gambar,komentar;
+    JSONArray gambar,komentar,lokasi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +56,13 @@ public class MainRecording extends AppCompatActivity {
         jsonObject = new JSONObject();
         gambar= new JSONArray();
         komentar = new JSONArray();
+        lokasi = new JSONArray();
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
         try {
             jsonObject.put("startDate", df.format(c));
-
+            jsonObject.put("jarak",0.0);
+            jsonObject.put("langkah",0);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -68,9 +70,25 @@ public class MainRecording extends AppCompatActivity {
         ll = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
+                double jarak=distance(lat,lng,location.getLatitude(),location.getLongitude());
                 lat = location.getLatitude();
                 lng = location.getLongitude();
                 num_call++;
+
+                JSONObject temp = new JSONObject();
+                Date c = Calendar.getInstance().getTime();
+                SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+                JSONObject templok= new JSONObject();
+                try {
+                    jsonObject.put("jarak",jarak + jsonObject.getDouble("jarak"));
+                    templok.put("date",df.format(c));
+                    templok.put("lat",lat);
+                    templok.put("lng",lng);
+
+                    lokasi.put(templok);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 TextView latText = (TextView) findViewById(R.id.lat);
                 TextView lngText = (TextView) findViewById(R.id.lng);
                 TextView counterText = (TextView) findViewById(R.id.cnt);
@@ -108,6 +126,26 @@ public class MainRecording extends AppCompatActivity {
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 0, ll);
 
+    }
+    private double distance(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1))
+                * Math.sin(deg2rad(lat2))
+                + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2))
+                * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        return (dist);
+    }
+
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -147,7 +185,7 @@ public class MainRecording extends AppCompatActivity {
                 case -1:
                     //store this shit textdialog
                     Date c = Calendar.getInstance().getTime();
-                    SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+                    SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
                     JSONObject temp= new JSONObject();
                     try {
                         temp.put("date",df.format(c));
@@ -185,7 +223,7 @@ public class MainRecording extends AppCompatActivity {
 
         bm = (Bitmap)datanya.getExtras().get("data");
         Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         JSONObject temp= new JSONObject();
         try {
             temp.put("date",df.format(c));
