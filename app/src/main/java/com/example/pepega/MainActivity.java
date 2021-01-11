@@ -3,6 +3,7 @@ package com.example.pepega;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -11,6 +12,8 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             // get JSONObject from JSON file
             //JSONObject obj = new JSONObject(loadJSONFromAsset());
             // fetch JSONArray named users
-            simpan();
+//            simpan();
             String str="";
             Cursor cur = dbku.rawQuery("select * from data",null);
 
@@ -108,10 +111,19 @@ public class MainActivity extends AppCompatActivity {
         TextView TextSteps;
         TextSteps = (TextView)findViewById(R.id.TextSteps);
         TextSteps.setText(String.valueOf(total_step));
+
+        Button coba = (Button)findViewById(R.id.butCoba);
+        coba.setOnClickListener(operasi);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
         CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, timestart, lat, lng, komen, komen2, timestamp, pic, timestop, total_step);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
     }
+
+    View.OnClickListener operasi = (v) -> {
+        switch(v.getId()){
+            case R.id.butCoba:show_detail(v); break;
+        }
+    };
 
     private void simpan()
     {
@@ -122,21 +134,10 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this,"Data Tersimpan",Toast.LENGTH_LONG).show();
     }
 
+    private void show_detail(View v){
+        Intent myIntent = new Intent(this.getBaseContext(), DetailActivity.class);
+        startActivityForResult(myIntent, 0);
+    }
 
-    /*
-    public String loadJSONFromAsset() {
-        String json = null;
-        try {
-            InputStream is = getAssets().open("fp_ppb.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-    }*/
+
 }
