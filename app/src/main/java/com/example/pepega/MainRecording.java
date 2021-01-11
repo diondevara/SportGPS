@@ -80,34 +80,8 @@ public class MainRecording extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        b1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //create an instance of an Intent object.
-                Intent data= new Intent();
-                Date c = Calendar.getInstance().getTime();
+        b1.setOnClickListener(operasi);
 
-                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.getDefault());
-                //Get the EditText view and typecast here.
-                try {
-                    jsonObject.put("koment",komentar);
-                    jsonObject.put("koordinat",lokasi);
-                    jsonObject.put("gambar",gambar);
-                    jsonObject.put("timestop", df.format(c));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-                //set the value/data to pass back
-                data.setData(Uri.parse(jsonObject.toString()));
-
-                //set a result code, It is either RESULT_OK or RESULT_CANCELLED
-                setResult(RESULT_OK,data);
-                //Close the activity
-                finish();
-            }
-        });
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         ll = new LocationListener() {
             @Override
@@ -170,6 +144,33 @@ public class MainRecording extends AppCompatActivity {
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 0, ll);
 
     }
+    View.OnClickListener operasi = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent data= new Intent();
+            Date c = Calendar.getInstance().getTime();
+
+            SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.getDefault());
+            //Get the EditText view and typecast here.
+            try {
+                jsonObject.put("koment",komentar);
+                jsonObject.put("koordinat",lokasi);
+                jsonObject.put("gambar",gambar);
+                jsonObject.put("timestop", df.format(c));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            //set the value/data to pass back
+            data.setData(Uri.parse(jsonObject.toString()));
+
+            //set a result code, It is either RESULT_OK or RESULT_CANCELLED
+            setResult(RESULT_OK,data);
+            //Close the activity
+            finish();
+        }
+    };
     private double distance(double lat1, double lon1, double lat2, double lon2) {
         double theta = lon1 - lon2;
         double dist = Math.sin(deg2rad(lat1))

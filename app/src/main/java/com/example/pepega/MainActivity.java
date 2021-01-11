@@ -84,8 +84,9 @@ public class MainActivity extends AppCompatActivity {
         TextView TextSteps;
         TextSteps = (TextView)findViewById(R.id.TextSteps);
         TextSteps.setText(String.valueOf(total_step));
-
+        Button record = (Button)findViewById(R.id.butRecord);
         Button coba = (Button)findViewById(R.id.butCoba);
+        record.setOnClickListener(operasi);
         coba.setOnClickListener(operasi);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
         CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, timestart, lat, lng, komen, komen2, timestamp, pic, timestop, total_step);
