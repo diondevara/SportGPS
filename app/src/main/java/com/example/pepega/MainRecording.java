@@ -30,8 +30,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainRecording extends AppCompatActivity {
     private static final int kodekamera = 222;
@@ -40,11 +47,23 @@ public class MainRecording extends AppCompatActivity {
     EditText textdialog;
     LocationManager locationManager;
     LocationListener ll;
-
+    JSONObject jsonObject;
+    JSONArray gambar,komentar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        jsonObject = new JSONObject();
+        gambar= new JSONArray();
+        komentar = new JSONArray();
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+        try {
+            jsonObject.put("startDate", df.format(c));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         ll = new LocationListener() {
             @Override
@@ -127,6 +146,16 @@ public class MainRecording extends AppCompatActivity {
             switch (which) {
                 case -1:
                     //store this shit textdialog
+                    Date c = Calendar.getInstance().getTime();
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+                    JSONObject temp= new JSONObject();
+                    try {
+                        temp.put("date",df.format(c));
+                        temp.put("komentar",textdialog.getText().toString());
+                        komentar.put(temp);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
                     //help any1
                     break;
@@ -155,9 +184,16 @@ public class MainRecording extends AppCompatActivity {
         Bitmap bm;
 
         bm = (Bitmap)datanya.getExtras().get("data");
-        //store this shit bm
-
-        //help any1
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+        JSONObject temp= new JSONObject();
+        try {
+            temp.put("date",df.format(c));
+            temp.put("gambar",bm);
+            komentar.put(temp);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 }
