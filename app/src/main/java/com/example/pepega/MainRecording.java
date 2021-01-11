@@ -76,7 +76,7 @@ public class MainRecording extends AppCompatActivity {
         try {
             jsonObject.put("timestart", df.format(c));
             jsonObject.put("jarak",0.0);
-            jsonObject.put("langkah",0);
+            jsonObject.put("total_step",0);
         } catch (JSONException e) {
             e.printStackTrace();
         }

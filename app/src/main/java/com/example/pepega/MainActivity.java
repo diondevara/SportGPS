@@ -1,5 +1,6 @@
 package com.example.pepega;
 
+import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 //            simpan();
             String str="";
             Cursor cur = dbku.rawQuery("select * from data",null);
+            JSONArray userArray = new JSONArray();
 
             if(cur.getCount() >0)
             {
@@ -72,39 +74,10 @@ public class MainActivity extends AppCompatActivity {
                         cur.getCount(),Toast.LENGTH_LONG).show();
                 cur.moveToFirst();
                 str = cur.getString(cur.getColumnIndex("j_son"));
+                JSONObject obj = new JSONObject(str);
+                userArray.put(obj);
             }
-            JSONObject obj = new JSONObject(str);
-            JSONArray userArray = obj.getJSONArray("users");
-            // implement for loop for getting users list data
-            for (int i = 0; i < userArray.length(); i++) {
-                //fetch user data
-                JSONObject user_detail = userArray.getJSONObject(i);
-                //fetch timestart
-                timestart.add(user_detail.getString("timestart"));
-                //create object koordinat
-                JSONObject koordinat = user_detail.getJSONObject("koordinat");
-                //create object koordinat1,fetch lat lng
-                JSONObject koordinat1 = koordinat.getJSONObject("koordinat1");
-                lat.add(koordinat1.getString("lat"));
-                lng.add(koordinat1.getString("lng"));
-                //create object komen
-                JSONObject komentar = user_detail.getJSONObject("komentar");
-                //create object komentar1, fetch komen
-                JSONObject komentar1 = komentar.getJSONObject("komentar1");
-                komen.add(komentar1.getString("komen"));
-                //create object komentar2, fetch komen
-                JSONObject komentar2 = komentar.getJSONObject("komentar2");
-                komen2.add(komentar2.getString("komen"));
-                //create object gambar
-                JSONObject gambar = user_detail.getJSONObject("gambar");
-                //create object gambar1, fetch pic
-                JSONObject gambar1 = gambar.getJSONObject("gambar1");
-                pic.add(gambar1.getString("pic"));
-                //fetch timestop
-                timestop.add(user_detail.getString("timestop"));
-                //fetch totalstep
-                total_step.add(user_detail.getString("total_step"));
-            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -119,9 +92,15 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
     }
 
-    View.OnClickListener operasi = (v) -> {
-        switch(v.getId()){
-            case R.id.butCoba:show_detail(v); break;
+    View.OnClickListener operasi = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.butCoba:
+                    show_detail(v);break;
+                case R.id.butRecord:
+                    recording();break;
+            }
         }
     };
 
@@ -136,6 +115,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void show_detail(View v){
         Intent myIntent = new Intent(this.getBaseContext(), DetailActivity.class);
+        startActivityForResult(myIntent, 0);
+    }
+    private void recording(){
+        Intent myIntent = new Intent(this.getBaseContext(), MainRecording.class);
         startActivityForResult(myIntent, 0);
     }
 
