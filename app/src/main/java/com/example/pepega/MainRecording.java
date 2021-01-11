@@ -57,15 +57,15 @@ public class MainRecording extends AppCompatActivity {
     JSONArray gambar,komentar,lokasi;
     Sensor stepsensor;
     SensorManager mSensorManager;
-    Button b1;
+    Button butfin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.recording);
         mSensorManager =
                 (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         stepsensor = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-        b1=(Button) findViewById(R.id.finish);
+        butfin=(Button) findViewById(R.id.finish);
         jsonObject = new JSONObject();
         gambar= new JSONArray();
         komentar = new JSONArray();
@@ -80,7 +80,7 @@ public class MainRecording extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        b1.setOnClickListener(operasi);
+        butfin.setOnClickListener(operasi);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         ll = new LocationListener() {
