@@ -20,6 +20,7 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -30,6 +31,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +57,7 @@ public class MainRecording extends AppCompatActivity {
     JSONArray gambar,komentar,lokasi;
     Sensor stepsensor;
     SensorManager mSensorManager;
+    Button b1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,21 +65,49 @@ public class MainRecording extends AppCompatActivity {
         mSensorManager =
                 (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         stepsensor = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-
+        b1=(Button) findViewById(R.id.finish);
         jsonObject = new JSONObject();
         gambar= new JSONArray();
         komentar = new JSONArray();
         lokasi = new JSONArray();
         Date c = Calendar.getInstance().getTime();
 
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.getDefault());
         try {
-            jsonObject.put("startDate", df.format(c));
+            jsonObject.put("timestart", df.format(c));
             jsonObject.put("jarak",0.0);
             jsonObject.put("langkah",0);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create an instance of an Intent object.
+                Intent data= new Intent();
+                Date c = Calendar.getInstance().getTime();
+
+                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.getDefault());
+                //Get the EditText view and typecast here.
+                try {
+                    jsonObject.put("koment",komentar);
+                    jsonObject.put("koordinat",lokasi);
+                    jsonObject.put("gambar",gambar);
+                    jsonObject.put("timestop", df.format(c));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                //set the value/data to pass back
+                data.setData(Uri.parse(jsonObject.toString()));
+
+                //set a result code, It is either RESULT_OK or RESULT_CANCELLED
+                setResult(RESULT_OK,data);
+                //Close the activity
+                finish();
+            }
+        });
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         ll = new LocationListener() {
             @Override
