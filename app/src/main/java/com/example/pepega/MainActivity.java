@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.butCoba:
-                    show_detail(v);break;
+                    show_detail();break;
                 case R.id.butRecord:
                     recording();break;
             }
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this,"Data Tersimpan",Toast.LENGTH_LONG).show();
     }
 
-    private void show_detail(View v){
+    private void show_detail(){
         Intent myIntent = new Intent(this.getBaseContext(), DetailActivity.class);
         startActivityForResult(myIntent, 0);
     }

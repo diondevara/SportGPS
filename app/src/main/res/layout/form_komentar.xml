@@ -12,17 +12,9 @@
         android:id="@+id/komentar"
         android:layout_width="match_parent"
         android:layout_height="76dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginRight="28dp"
-        android:layout_marginTop="28dp"
+        android:layout_margin="28dp"
         android:hint="Komentar"
         />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="28dp">
 
-    </LinearLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

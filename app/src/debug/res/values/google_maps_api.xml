@@ -1,0 +1,24 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=BD:F9:EA:FE:35:6B:8C:0B:3E:AF:AE:6F:B3:20:5E:C5:4D:92:FE:05%3Bcom.example.pepega
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    com.example.pepega
+
+    SHA-1 certificate fingerprint:
+    BD:F9:EA:FE:35:6B:8C:0B:3E:AF:AE:6F:B3:20:5E:C5:4D:92:FE:05
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="AIzaSyCHsIZ0AXBaofz5LTSL9LPxLR1NBlYDTZ8" templateMergeStrategy="preserve" translatable="false">AIzaSyCHsIZ0AXBaofz5LTSL9LPxLR1NBlYDTZ8</string>
+</resources>
