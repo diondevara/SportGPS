@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String json = "{\n\t\"users\": [\n\t\t{\n\t\t\t\"timestart\": \"2013-10-07 07:23:19\",\n\t\t\t\"koordinat\": {\n\t\t\t\t\"koordinat1\": {\n\t\t\t\t\t\"lat\": \"0\",\n\t\t\t\t\t\"lng\": \"0\",\n\t\t\t\t\t\"timestamp\": \"2013-10-07 08:23:19\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"komentar\": {\n\t\t\t\t\"komentar1\":{\n\t\t\t\t\t\"komen\": \"test\",\n\t\t\t\t\t\"timestamp\": \"2013-10-07 08:23:19\"\n\t\t\t\t},\n\t\t\t\t\"komentar2\": {\n\t\t\t\t\t\"komen\": \"test1\",\n\t\t\t\t\t\"timestamp\": \"2013-10-07 08:23:19\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"gambar\": {\n\t\t\t\t\"gambar1\": {\n\t\t\t\t\t\"pic\": \"\",\n\t\t\t\t\t\"timestamp\": \"2013-10-07 08:23:19\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"timestop\": \"2013-10-07 09:23:19\",\n\t\t\t\"total_step\": \"69\"\n\t\t}\n\t]\n}\n\n";
+    //private String json = "{\n\t\"users\": [\n\t\t{\n\t\t\t\"timestart\": \"2013-10-07 07:23:19\",\n\t\t\t\"koordinat\": {\n\t\t\t\t\"koordinat1\": {\n\t\t\t\t\t\"lat\": \"0\",\n\t\t\t\t\t\"lng\": \"0\",\n\t\t\t\t\t\"timestamp\": \"2013-10-07 08:23:19\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"komentar\": {\n\t\t\t\t\"komentar1\":{\n\t\t\t\t\t\"komen\": \"test\",\n\t\t\t\t\t\"timestamp\": \"2013-10-07 08:23:19\"\n\t\t\t\t},\n\t\t\t\t\"komentar2\": {\n\t\t\t\t\t\"komen\": \"test1\",\n\t\t\t\t\t\"timestamp\": \"2013-10-07 08:23:19\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"gambar\": {\n\t\t\t\t\"gambar1\": {\n\t\t\t\t\t\"pic\": \"\",\n\t\t\t\t\t\"timestamp\": \"2013-10-07 08:23:19\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"timestop\": \"2013-10-07 09:23:19\",\n\t\t\t\"total_step\": \"69\"\n\t\t}\n\t]\n}\n\n";
     private SQLiteOpenHelper Opendb;
     private SQLiteDatabase dbku;
     // ArrayList for person names, email Id's and mobile numbers
@@ -100,12 +101,13 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.butCoba:
                     show_detail();break;
                 case R.id.butRecord:
-                    recording();break;
+                    recording();
+                    break;
             }
         }
     };
 
-    private void simpan()
+    private void simpan(String json)
     {
         ContentValues dataku = new ContentValues();
 
@@ -118,9 +120,14 @@ public class MainActivity extends AppCompatActivity {
         Intent myIntent = new Intent(this.getBaseContext(), DetailActivity.class);
         startActivityForResult(myIntent, 0);
     }
-    private void recording(){
+    private void recording() {
         Intent myIntent = new Intent(this.getBaseContext(), MainRecording.class);
         startActivityForResult(myIntent, 0);
+
+        // Get data from Intent
+        String jsondata = myIntent.getData().toString();
+        simpan(jsondata);
+
     }
 
 
