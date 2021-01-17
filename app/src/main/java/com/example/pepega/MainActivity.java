@@ -122,11 +122,26 @@ public class MainActivity extends AppCompatActivity {
     }
     private void recording() {
         Intent myIntent = new Intent(this.getBaseContext(), MainRecording.class);
-        startActivityForResult(myIntent, 0);
+        startActivityForResult(myIntent, 2);
 
         // Get data from Intent
 
     }
+    // Call Back method  to get the Message form other Activity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent myIntent)
+    {
+        super.onActivityResult(requestCode, resultCode, myIntent);
+        // check if the request code is same as what is passed  here it is 2
+        if(requestCode==2)
+        {
+            if(resultCode==RESULT_OK)
+            {
+                String jsondata=myIntent.getStringExtra("result");
+                simpan(jsondata);
+            }
 
+        }
+    }
 
 }

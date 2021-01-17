@@ -26,8 +26,14 @@ public class DetailActivity extends FragmentActivity implements OnMapReadyCallba
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         backbutt = (Button)findViewById(R.id.backbutton);
+        backbutt.setOnClickListener(op);
     }
-
+    View.OnClickListener op = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            finish();
+        }
+    };
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
