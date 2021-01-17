@@ -125,8 +125,6 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(myIntent, 0);
 
         // Get data from Intent
-        String jsondata = myIntent.getData().toString();
-        simpan(jsondata);
 
     }
 

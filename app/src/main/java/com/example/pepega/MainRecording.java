@@ -49,7 +49,7 @@ import java.util.Locale;
 public class MainRecording extends AppCompatActivity {
     private static final int kodekamera = 222;
     private int num_call = 0;
-    private double lat = 0, lng = 0;
+    private double lat = 0, lng = 0,total_jarak = 0;
     EditText textdialog;
     LocationManager locationManager;
     LocationListener ll;
@@ -90,13 +90,17 @@ public class MainRecording extends AppCompatActivity {
                 lat = location.getLatitude();
                 lng = location.getLongitude();
                 num_call++;
+                Log.d("dbg", "count: "+num_call);
+                if(num_call>1){
+                    total_jarak+=jarak;
+                }
 
                 JSONObject temp = new JSONObject();
                 Date c = Calendar.getInstance().getTime();
                 SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
                 JSONObject templok= new JSONObject();
                 try {
-                    jsonObject.put("jarak",jarak + jsonObject.getDouble("jarak"));
+                    jsonObject.put("jarak",total_jarak);
                     templok.put("date",df.format(c));
                     templok.put("lat",lat);
                     templok.put("lng",lng);
@@ -110,7 +114,7 @@ public class MainRecording extends AppCompatActivity {
                 TextView counterText = (TextView) findViewById(R.id.cnt);
                 latText.setText(String.valueOf(lat));
                 lngText.setText(String.valueOf(lng));
-                counterText.setText(String.valueOf(num_call));
+                counterText.setText(String.valueOf(total_jarak));
                 Toast.makeText(getBaseContext(), "GPS capture",
                         Toast.LENGTH_LONG).show();
             }
