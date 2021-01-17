@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 tools:context=".DetailActivity"
-                android:layout_weight="3"/>
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -31,9 +31,9 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#1E51E9"
-                android:layout_marginLeft="50px"
-                android:layout_marginRight="50px"
+                android:background="#0d0130"
+                android:layout_marginLeft="10px"
+                android:layout_marginRight="10px"
                 android:layout_marginTop="10px"
                 android:layout_marginBottom="20px"/>
 
@@ -47,15 +47,26 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Walking + Running Distance: " />
+                    android:text="Walking + Running Distance: "
+                    android:textSize="15dp"
+                    android:layout_marginBottom="15px"/>
 
                 <TextView
                     android:id="@+id/texDist"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20px"
                     android:gravity="end"
-                    android:text="Dist" />
+                    android:text="Dist"
+                    android:textSize="15dp"
+                    android:layout_marginBottom="15px"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20px"
+                    android:text=" km"
+                    android:textSize="15dp"
+                    android:layout_marginBottom="15px"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -66,21 +77,25 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Steps: "/>
+                    android:text="Steps: "
+                    android:textSize="15dp"
+                    android:layout_marginBottom="15px"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Dist"
-                    android:id="@+id/texLat"
+                    android:id="@+id/texStep"
                     android:gravity="end"
-                    android:layout_marginRight="20px"/>
+                    android:layout_marginRight="20px"
+                    android:textSize="15dp"
+                    android:layout_marginBottom="15px"/>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#1E51E9"
-                android:layout_marginLeft="50px"
-                android:layout_marginRight="50px"
+                android:background="#0d0130"
+                android:layout_marginLeft="10px"
+                android:layout_marginRight="10px"
                 android:layout_marginTop="10px"
                 android:layout_marginBottom="20px"/>
 
@@ -100,9 +115,9 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#1E51E9"
-                android:layout_marginLeft="50px"
-                android:layout_marginRight="50px"
+                android:background="#0d0130"
+                android:layout_marginLeft="10px"
+                android:layout_marginRight="10px"
                 android:layout_marginTop="10px"
                 android:layout_marginBottom="20px"/>
 
@@ -121,12 +136,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="3"/>
+
                     <Button
+                        android:id="@+id/backbutton"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="9"
-                        android:text="back"
-                        android:id="@+id/backbutton"/>
+                        android:text="back" />
                 </LinearLayout>
 
 

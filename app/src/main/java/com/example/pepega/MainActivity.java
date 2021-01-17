@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -34,11 +35,13 @@ public class MainActivity extends AppCompatActivity {
     //private String json = "{\n\t\"users\": [\n\t\t{\n\t\t\t\"timestart\": \"2013-10-07 07:23:19\",\n\t\t\t\"koordinat\": {\n\t\t\t\t\"koordinat1\": {\n\t\t\t\t\t\"lat\": \"0\",\n\t\t\t\t\t\"lng\": \"0\",\n\t\t\t\t\t\"timestamp\": \"2013-10-07 08:23:19\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"komentar\": {\n\t\t\t\t\"komentar1\":{\n\t\t\t\t\t\"komen\": \"test\",\n\t\t\t\t\t\"timestamp\": \"2013-10-07 08:23:19\"\n\t\t\t\t},\n\t\t\t\t\"komentar2\": {\n\t\t\t\t\t\"komen\": \"test1\",\n\t\t\t\t\t\"timestamp\": \"2013-10-07 08:23:19\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"gambar\": {\n\t\t\t\t\"gambar1\": {\n\t\t\t\t\t\"pic\": \"\",\n\t\t\t\t\t\"timestamp\": \"2013-10-07 08:23:19\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"timestop\": \"2013-10-07 09:23:19\",\n\t\t\t\"total_step\": \"69\"\n\t\t}\n\t]\n}\n\n";
     private SQLiteOpenHelper Opendb;
     private SQLiteDatabase dbku;
+    private CustomAdapter.RecyclerViewClickListener listener;
     // ArrayList for person names, email Id's and mobile numbers
     JSONArray userArray;
     ArrayList<String> total_step = new ArrayList<>();
     ArrayList<MyData> datalist= new ArrayList<>();
     CustomAdapter customAdapter;
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE, dd-MMM-yyyy");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +49,10 @@ public class MainActivity extends AppCompatActivity {
         // get the reference of RecyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         // set a LinearLayoutManager with default vertical orientation
+        setOnClickListener();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        customAdapter = new CustomAdapter(MainActivity.this, datalist);
+        customAdapter = new CustomAdapter(MainActivity.this, datalist, listener);
         recyclerView.setAdapter(customAdapter);
         Opendb = new SQLiteOpenHelper(this,"db.sql",null,1) {
             @Override
@@ -58,12 +62,13 @@ public class MainActivity extends AppCompatActivity {
         };
         dbku = Opendb.getWritableDatabase();
 
+
         dbku.execSQL("create table if not exists data(j_son TEXT);");
         try {
             // get JSONObject from JSON file
-            //JSONObject obj = new JSONObject(loadJSONFromAsset());
+            // JSONObject obj = new JSONObject(loadJSONFromAsset());
             // fetch JSONArray named users
-//            simpan();
+            // simpan();
             String str="";
             Cursor cur = dbku.rawQuery("select * from data",null);
             userArray = new JSONArray();
@@ -105,17 +110,29 @@ public class MainActivity extends AppCompatActivity {
                             " Question text = " + data.getDistance());
             datalist.add(data);
         }
-// notify data set change call missing
+        // notify data set change call missing
         customAdapter.notifyDataSetChanged();
         TextView TextSteps;
         TextSteps = (TextView)findViewById(R.id.TextSteps);
-        TextSteps.setText(String.valueOf(total_step));
+        // TextSteps.setText(String.valueOf(total_step));
         Button record = (Button)findViewById(R.id.butRecord);
         Button coba = (Button)findViewById(R.id.butCoba);
         record.setOnClickListener(operasi);
         coba.setOnClickListener(operasi);
-        //  call the constructor of CustomAdapter to send the reference and data to Adapter
-         // set the Adapter to RecyclerView
+        // call the constructor of CustomAdapter to send the reference and data to Adapter
+        // set the Adapter to RecyclerView
+    }
+
+    private void setOnClickListener() {
+        listener = new CustomAdapter.RecyclerViewClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                intent.putExtra("timestart", datalist.get(position).getStart());
+                intent.putExtra("jarak", datalist.get(position).getDistance());
+                startActivity(intent);
+            }
+        };
     }
 
     View.OnClickListener operasi = new View.OnClickListener() {

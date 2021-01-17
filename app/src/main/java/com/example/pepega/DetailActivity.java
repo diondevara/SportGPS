@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.FragmentActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,6 +16,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class DetailActivity extends FragmentActivity implements OnMapReadyCallback {
     Button backbutt;
+    TextView texDist;
+    TextView texStep;
     private GoogleMap mMap;
 
     @Override
@@ -27,6 +30,18 @@ public class DetailActivity extends FragmentActivity implements OnMapReadyCallba
         mapFragment.getMapAsync(this);
         backbutt = (Button)findViewById(R.id.backbutton);
         backbutt.setOnClickListener(op);
+
+        texDist = (TextView)findViewById(R.id.texDist);
+        texStep = (TextView)findViewById(R.id.texStep);
+        String steps = "0";
+        String distance = "Kosong";
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            distance = extras.getString("jarak");
+            steps = extras.getString("timestart");
+        }
+        texDist.setText(distance);
+        texStep.setText(steps);
     }
     View.OnClickListener op = new View.OnClickListener() {
         @Override
