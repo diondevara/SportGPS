@@ -1,5 +1,6 @@
 package com.example.pepega;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,16 +35,10 @@ public class MainActivity extends AppCompatActivity {
     private SQLiteOpenHelper Opendb;
     private SQLiteDatabase dbku;
     // ArrayList for person names, email Id's and mobile numbers
-    ArrayList<String> timestart = new ArrayList<>();
-    ArrayList<String> lat = new ArrayList<>();
-    ArrayList<String> lng = new ArrayList<>();
-    ArrayList<String> komen = new ArrayList<>();
-    ArrayList<String> komen2 = new ArrayList<>();
-    ArrayList<String> timestamp = new ArrayList<>();
-    ArrayList<String> pic = new ArrayList<>();
-    ArrayList<String> timestop = new ArrayList<>();
+    JSONArray userArray;
     ArrayList<String> total_step = new ArrayList<>();
-
+    ArrayList<MyData> datalist= new ArrayList<>();
+    CustomAdapter customAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
         // set a LinearLayoutManager with default vertical orientation
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-
+        customAdapter = new CustomAdapter(MainActivity.this, datalist);
+        recyclerView.setAdapter(customAdapter);
         Opendb = new SQLiteOpenHelper(this,"db.sql",null,1) {
             @Override
             public void onCreate(SQLiteDatabase db) {}
@@ -59,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion){}
         };
         dbku = Opendb.getWritableDatabase();
+
         dbku.execSQL("create table if not exists data(j_son TEXT);");
         try {
             // get JSONObject from JSON file
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 //            simpan();
             String str="";
             Cursor cur = dbku.rawQuery("select * from data",null);
-            JSONArray userArray = new JSONArray();
+            userArray = new JSONArray();
 
             if(cur.getCount() >0)
             {
@@ -79,9 +78,35 @@ public class MainActivity extends AppCompatActivity {
                 userArray.put(obj);
             }
 
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        if(userArray.length()==0){
+            datalist.add(new MyData("",""));
+        }
+        for (int i = 0; i < userArray.length(); i++) {
+            JSONObject obj = null;
+            try {
+                obj = userArray.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            MyData data = null;
+            try {
+                data = new MyData(
+                        obj.getString("timestart"),
+                        obj.getString("jarak"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.e("Question" + " " + i,
+                    "\nQuestion id = " + data.getStart() +
+                            " Question text = " + data.getDistance());
+            datalist.add(data);
+        }
+// notify data set change call missing
+        customAdapter.notifyDataSetChanged();
         TextView TextSteps;
         TextSteps = (TextView)findViewById(R.id.TextSteps);
         TextSteps.setText(String.valueOf(total_step));
@@ -90,8 +115,7 @@ public class MainActivity extends AppCompatActivity {
         record.setOnClickListener(operasi);
         coba.setOnClickListener(operasi);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, timestart, lat, lng, komen, komen2, timestamp, pic, timestop, total_step);
-        recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
+         // set the Adapter to RecyclerView
     }
 
     View.OnClickListener operasi = new View.OnClickListener() {
@@ -122,11 +146,37 @@ public class MainActivity extends AppCompatActivity {
     }
     private void recording() {
         Intent myIntent = new Intent(this.getBaseContext(), MainRecording.class);
-        startActivityForResult(myIntent, 0);
+        startActivityForResult(myIntent, 100);
 
         // Get data from Intent
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==100){
+            //doDB things
+            String jsondata = null;
+            if (data != null) {
+                jsondata = Objects.requireNonNull(data.getData()).toString();
+                if(jsondata != ""){
+                    simpan(jsondata);
+                    JSONObject obj = null;
+                    try {
+                        obj = new JSONObject(jsondata);
+                        MyData temp=new MyData(obj.getString("timestart"),
+                                obj.getString("jarak"));
+                        datalist.add(temp);
+                        customAdapter.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
+
+                }
+            }
+
+        }
+    }
 }

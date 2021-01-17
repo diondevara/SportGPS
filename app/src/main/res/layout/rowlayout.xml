@@ -23,59 +23,11 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/latitude"
+            android:id="@+id/distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="lati"
+            android:text="distance"
             android:textColor="#000"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/langitude"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="lang"
-            android:textColor="#000"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/comment1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="komens"
-            android:textColor="#000"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/comment2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="komens2"
-            android:textColor="#000"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/picture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="pics"
-            android:textColor="#000"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/timestop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="lang"
-            android:textColor="#000"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/timestep"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="lang"
-            android:textColor="#000"
-            android:textSize="15sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
