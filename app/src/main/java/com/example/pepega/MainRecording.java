@@ -167,8 +167,9 @@ public class MainRecording extends AppCompatActivity {
 
 
             //set the value/data to pass back
+            String result = jsonObject.toString();
             data.setData(Uri.parse(jsonObject.toString()));
-
+            data.putExtra("result",result);
             //set a result code, It is either RESULT_OK or RESULT_CANCELLED
             setResult(RESULT_OK,data);
             //Close the activity
