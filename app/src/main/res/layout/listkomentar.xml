@@ -18,22 +18,20 @@
         items for a single row of RecyclerView
         -->
         <TextView
-            android:id="@+id/timekoment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="waktukoment"
-            android:textColor="#000"
-            android:textSize="20sp" />
-
-        <TextView
             android:id="@+id/komentarnya"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="komentarnya"
             android:textColor="#000"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:layout_weight="1"/>
-
+        <TextView
+            android:id="@+id/timekoment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="waktukoment"
+            android:textColor="#000"
+            android:textSize="15sp" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

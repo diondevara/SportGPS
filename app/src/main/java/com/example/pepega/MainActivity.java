@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> total_step = new ArrayList<>();
     ArrayList<MyData> datalist= new ArrayList<>();
     CustomAdapter customAdapter;
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE, dd-MMM-yyyy");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,9 +120,7 @@ public class MainActivity extends AppCompatActivity {
         TextSteps = (TextView)findViewById(R.id.TextSteps);
         // TextSteps.setText(String.valueOf(total_step));
         Button record = (Button)findViewById(R.id.butRecord);
-        Button coba = (Button)findViewById(R.id.butCoba);
         record.setOnClickListener(operasi);
-        coba.setOnClickListener(operasi);
         // call the constructor of CustomAdapter to send the reference and data to Adapter
         // set the Adapter to RecyclerView
     }
@@ -147,8 +145,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.butCoba:
-                    show_detail();break;
                 case R.id.butRecord:
                     recording();
                     break;
@@ -165,10 +161,6 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this,"Data Tersimpan",Toast.LENGTH_LONG).show();
     }
 
-    private void show_detail(){
-        Intent myIntent = new Intent(this.getBaseContext(), DetailActivity.class);
-        startActivityForResult(myIntent, 0);
-    }
     private void recording() {
         Intent myIntent = new Intent(this.getBaseContext(), MainRecording.class);
         startActivityForResult(myIntent, 100);

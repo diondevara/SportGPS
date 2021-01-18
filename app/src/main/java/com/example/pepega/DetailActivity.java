@@ -2,12 +2,17 @@ package com.example.pepega;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.ims.RcsUceAdapter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -19,12 +24,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class DetailActivity extends FragmentActivity implements OnMapReadyCallback {
     Button backbutt;
-    TextView texDist;
-    TextView texStep;
+    TextView texDist, texStep;
     private GoogleMap mMap;
     JSONObject fulldata;
+    private ArrayList<MyKomen> komenList = new ArrayList<>();
+    private ArrayList<MyPicture> gambarList = new ArrayList<>();
+    private RecyclerView recyclerComment;
+    private RecyclerView recyclerGambar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +44,10 @@ public class DetailActivity extends FragmentActivity implements OnMapReadyCallba
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        backbutt = (Button)findViewById(R.id.backbutton);
-        backbutt.setOnClickListener(op);
 
         texDist = (TextView)findViewById(R.id.texDist);
         texStep = (TextView)findViewById(R.id.texStep);
+
         String steps = "0";
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
@@ -52,10 +62,14 @@ public class DetailActivity extends FragmentActivity implements OnMapReadyCallba
         }
         try {
             texDist.setText(fulldata.get("jarak").toString());
-            texStep.setText(fulldata.get("timestart").toString());
+            texStep.setText(fulldata.get("total_step").toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        recyclerComment = findViewById(R.id.recyclerComment);
+        recyclerGambar = findViewById(R.id.recyclerGambar);
+        setAdapter();
     }
     View.OnClickListener op = new View.OnClickListener() {
         @Override
@@ -89,5 +103,18 @@ public class DetailActivity extends FragmentActivity implements OnMapReadyCallba
 //        LatLng target = new LatLng(getIntent().getDoubleExtra("lat",0),getIntent().getDoubleExtra("lng",0));
 //        mMap.addMarker(new MarkerOptions().position(target).title("Marker in target"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(target, 7));
+    }
+
+    private void setAdapter(){
+        AdapterKomen adapterKomen = new AdapterKomen(DetailActivity.this, komenList);
+        AdapterPicture adapterPicture = new AdapterPicture(DetailActivity.this, gambarList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getApplicationContext());
+        recyclerComment.setLayoutManager(linearLayoutManager);
+        recyclerComment.setItemAnimator(new DefaultItemAnimator());
+        recyclerComment.setAdapter(adapterKomen);
+        recyclerGambar.setLayoutManager(linearLayoutManager2);
+        recyclerGambar.setItemAnimator(new DefaultItemAnimator());
+        recyclerGambar.setAdapter(adapterPicture);
     }
 }

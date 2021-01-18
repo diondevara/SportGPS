@@ -35,16 +35,13 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_margin="10px"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Activity Detail"
-        android:id="@+id/butCoba"/>
 
     <Button
         android:id="@+id/butRecord"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="new activity" />
+        android:text="new activity"
+        android:background="#0d0130"
+        android:textColor="#fff"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

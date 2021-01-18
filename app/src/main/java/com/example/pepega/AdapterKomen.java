@@ -54,8 +54,8 @@ public class AdapterKomen extends RecyclerView.Adapter<AdapterKomen.MyViewHolder
             super(itemView);
 
             // get the reference of item view's
-            date = (TextView) itemView.findViewById(R.id.komentarnya);
-            komentar = (TextView) itemView.findViewById(R.id.timekoment);
+            date = (TextView) itemView.findViewById(R.id.timekoment);
+            komentar = (TextView) itemView.findViewById(R.id.komentarnya);
 
         }
     }
