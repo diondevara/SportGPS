@@ -15,13 +15,6 @@
         android:layout_margin="28dp"
         android:hint="Komentar"
         />
-    <EditText
-        android:id="@+id/date"
-        android:layout_width="match_parent"
-        android:layout_height="76dp"
-        android:layout_margin="28dp"
-        android:hint="Date"
-        />
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

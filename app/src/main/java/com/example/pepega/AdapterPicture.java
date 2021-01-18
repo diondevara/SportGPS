@@ -19,17 +19,17 @@ public class AdapterPicture extends RecyclerView.Adapter<AdapterPicture.MyViewHo
     // datanya bukannya begini arrlist<json>
     List<MyPicture> datanya;
     Context context;
-    public AdapterPicture(Context context, ArrayList<MyPicture> data, RecyclerViewClickListener listener) {
+    public AdapterPicture(Context context, ArrayList<MyPicture> data ) {
         this.context=context;
         this.datanya=data;
-        this.listener = listener;
+
     }
-    private RecyclerViewClickListener listener;
+
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // infalte the item Layout
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rowlayout, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.listgambar, parent, false);
         // pass the view to View Holder
         return new MyViewHolder(v);
     }
@@ -48,25 +48,19 @@ public class AdapterPicture extends RecyclerView.Adapter<AdapterPicture.MyViewHo
         return datanya.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView date,gambar;// init the item view's
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             // get the reference of item view's
-            date = (TextView) itemView.findViewById(R.id.date);
-            gambar = (TextView) itemView.findViewById(R.id.gambar);
-            itemView.setOnClickListener(this);
+            date = (TextView) itemView.findViewById(R.id.timegambar);
+            gambar = (TextView) itemView.findViewById(R.id.gambarnya);
         }
 
-        @Override
-        public void onClick(View view) {
-            listener.onClick(view, getAdapterPosition());
-        }
+
     }
 
-    public interface RecyclerViewClickListener{
-        void onClick(View view, int position);
-    }
+
 }

@@ -19,17 +19,16 @@ public class AdapterKomen extends RecyclerView.Adapter<AdapterKomen.MyViewHolder
     // datanya bukannya begini arrlist<json>
     List<MyKomen> datanya;
     Context context;
-    public AdapterKomen(Context context, ArrayList<MyKomen> data, RecyclerViewClickListener listener) {
+    public AdapterKomen(Context context, ArrayList<MyKomen> data ) {
         this.context=context;
         this.datanya=data;
-        this.listener = listener;
     }
-    private RecyclerViewClickListener listener;
+
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // infalte the item Layout
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rowlayout, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.listkomentar, parent, false);
         // pass the view to View Holder
         return new MyViewHolder(v);
     }
@@ -48,25 +47,18 @@ public class AdapterKomen extends RecyclerView.Adapter<AdapterKomen.MyViewHolder
         return datanya.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView date,komentar;// init the item view's
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             // get the reference of item view's
-            date = (TextView) itemView.findViewById(R.id.date);
-            komentar = (TextView) itemView.findViewById(R.id.komentar);
-            itemView.setOnClickListener(this);
-        }
+            date = (TextView) itemView.findViewById(R.id.komentarnya);
+            komentar = (TextView) itemView.findViewById(R.id.timekoment);
 
-        @Override
-        public void onClick(View view) {
-            listener.onClick(view, getAdapterPosition());
         }
     }
 
-    public interface RecyclerViewClickListener{
-        void onClick(View view, int position);
-    }
+
 }
