@@ -15,6 +15,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -65,9 +66,25 @@ public class DetailActivity extends FragmentActivity implements OnMapReadyCallba
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng ITS = new LatLng(-7.2819705,112.795323);
-        mMap.addMarker(new MarkerOptions().position(ITS).title("Marker in ITS"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ITS, 15));
+        JSONArray koordinat = null;
+        try {
+             koordinat=new JSONArray(fulldata.get("koordinat").toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (koordinat != null) {
+            for(int i = 0; i<koordinat.length(); i++){
+                try {
+                    JSONObject row= new JSONObject(koordinat.get(i).toString());
+                    LatLng ITS = new LatLng(Double.parseDouble(row.get("lat").toString()),Double.parseDouble(row.get("lng").toString()));
+                    mMap.addMarker(new MarkerOptions().position(ITS).title("Marker"));
+                    if(i==0)mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ITS, 15));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
         // Add a marker in Sydney and move the camera
 //        LatLng target = new LatLng(getIntent().getDoubleExtra("lat",0),getIntent().getDoubleExtra("lng",0));
 //        mMap.addMarker(new MarkerOptions().position(target).title("Marker in target"));
