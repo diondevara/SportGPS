@@ -78,9 +78,13 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this,"Data Ditemukan Sejumlah " +
                         cur.getCount(),Toast.LENGTH_LONG).show();
                 cur.moveToFirst();
-                str = cur.getString(cur.getColumnIndex("j_son"));
-                JSONObject obj = new JSONObject(str);
-                userArray.put(obj);
+                for(int i=0;i<cur.getCount();i++){
+                    str = cur.getString(cur.getColumnIndex("j_son"));
+                    JSONObject obj = new JSONObject(str);
+                    cur.moveToNext();
+                    userArray.put(obj);
+                }
+
             }
 
 
@@ -128,8 +132,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view, int position) {
                 Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-                intent.putExtra("timestart", datalist.get(position).getStart());
-                intent.putExtra("jarak", datalist.get(position).getDistance());
+
+                try {
+                    intent.putExtra("data", userArray.get(position).toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 startActivity(intent);
             }
         };
