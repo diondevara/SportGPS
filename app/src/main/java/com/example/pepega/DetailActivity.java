@@ -113,7 +113,7 @@ public class DetailActivity extends FragmentActivity implements OnMapReadyCallba
         recyclerComment.setLayoutManager(linearLayoutManager);
         recyclerComment.setItemAnimator(new DefaultItemAnimator());
         recyclerComment.setAdapter(adapterKomen);
-        recyclerGambar.setLayoutManager(linearLayoutManager);
+        recyclerGambar.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerGambar.setItemAnimator(new DefaultItemAnimator());
         recyclerGambar.setAdapter(adapterPicture);
     }
