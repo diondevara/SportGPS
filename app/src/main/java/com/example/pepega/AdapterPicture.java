@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +40,7 @@ public class AdapterPicture extends RecyclerView.Adapter<AdapterPicture.MyViewHo
         // set the data in items
         MyPicture dat=(MyPicture) datanya.get(position);
         holder.date.setText(dat.getDate());
-        holder.gambar.setText(dat.getPicture());
+        holder.gambar.setImageBitmap(dat.getPicture());
     }
 
 
@@ -49,14 +50,14 @@ public class AdapterPicture extends RecyclerView.Adapter<AdapterPicture.MyViewHo
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView date,gambar;// init the item view's
-
+        TextView date;// init the item view's
+        ImageView gambar;
         public MyViewHolder(View itemView) {
             super(itemView);
 
             // get the reference of item view's
             date = (TextView) itemView.findViewById(R.id.timegambar);
-            gambar = (TextView) itemView.findViewById(R.id.gambarnya);
+            gambar = (ImageView) itemView.findViewById(R.id.gambarnya);
         }
 
 

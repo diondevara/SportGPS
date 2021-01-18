@@ -1,9 +1,11 @@
 package com.example.pepega;
 
+import android.graphics.Bitmap;
+
 public class MyPicture {
     private final String date;
-    private final String gambar;
-    public MyPicture(String date, String gambar) {
+    private final Bitmap gambar;
+    public MyPicture(String date, Bitmap gambar) {
         this.date = date;
         this.gambar = gambar;
     }
@@ -12,7 +14,7 @@ public class MyPicture {
         return date;
     }
 
-    public String getPicture() {
+    public Bitmap getPicture() {
         return gambar;
     }
 }
