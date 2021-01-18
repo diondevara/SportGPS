@@ -108,12 +108,12 @@ public class DetailActivity extends FragmentActivity implements OnMapReadyCallba
     private void setAdapter(){
         AdapterKomen adapterKomen = new AdapterKomen(DetailActivity.this, komenList);
         AdapterPicture adapterPicture = new AdapterPicture(DetailActivity.this, gambarList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+
         //LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getApplicationContext());
-        recyclerComment.setLayoutManager(linearLayoutManager);
+        recyclerComment.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerComment.setItemAnimator(new DefaultItemAnimator());
         recyclerComment.setAdapter(adapterKomen);
-        recyclerGambar.setLayoutManager(linearLayoutManager);
+        recyclerGambar.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerGambar.setItemAnimator(new DefaultItemAnimator());
         recyclerGambar.setAdapter(adapterPicture);
     }
