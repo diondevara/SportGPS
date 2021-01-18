@@ -271,12 +271,17 @@ public class MainRecording extends AppCompatActivity {
         Bitmap bm;
 
         bm = (Bitmap)datanya.getExtras().get("data");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.PNG, 100, baos); //bm is the bitmap object
+        byte[] b = baos.toByteArray();
+
+        String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         JSONObject tempcam= new JSONObject();
         try {
             tempcam.put("date",df.format(c));
-            tempcam.put("gambar",bm);
+            tempcam.put("gambar",encodedImage);
             gambar.put(tempcam);
         } catch (JSONException e) {
             e.printStackTrace();

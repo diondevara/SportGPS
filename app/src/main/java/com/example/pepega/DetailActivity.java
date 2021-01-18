@@ -1,8 +1,11 @@
 package com.example.pepega;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.telephony.ims.RcsUceAdapter;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -106,6 +109,43 @@ public class DetailActivity extends FragmentActivity implements OnMapReadyCallba
     }
 
     private void setAdapter(){
+        JSONArray komentar = null;
+        JSONArray gambar = null;
+        try {
+            komentar=new JSONArray(fulldata.get("koordinat").toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (komentar != null) {
+            for(int i = 0; i<komentar.length(); i++){
+                try {
+                    JSONObject row= new JSONObject(komentar.get(i).toString());
+                    MyKomen temp=new MyKomen(row.getString("date"),row.getString("komentar"));
+                    komenList.add(temp);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+        try {
+            gambar=new JSONArray(fulldata.get("koordinat").toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (gambar != null) {
+            for(int i = 0; i<gambar.length(); i++){
+                try {
+                    JSONObject row= new JSONObject(gambar.get(i).toString());
+                    MyPicture temp=new MyPicture(row.getString("date"),StringToBitMap(row.getString("gambar")) );
+                    gambarList.add(temp);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
         AdapterKomen adapterKomen = new AdapterKomen(DetailActivity.this, komenList);
         AdapterPicture adapterPicture = new AdapterPicture(DetailActivity.this, gambarList);
 
@@ -116,5 +156,16 @@ public class DetailActivity extends FragmentActivity implements OnMapReadyCallba
         recyclerGambar.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerGambar.setItemAnimator(new DefaultItemAnimator());
         recyclerGambar.setAdapter(adapterPicture);
+    }
+    public Bitmap StringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }
+        catch(Exception e){
+            e.getMessage();
+            return null;
+        }
     }
 }
