@@ -277,7 +277,7 @@ public class MainRecording extends AppCompatActivity {
         try {
             tempcam.put("date",df.format(c));
             tempcam.put("gambar",bm);
-            komentar.put(tempcam);
+            gambar.put(tempcam);
         } catch (JSONException e) {
             e.printStackTrace();
         }
