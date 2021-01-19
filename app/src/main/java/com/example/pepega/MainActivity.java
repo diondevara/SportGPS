@@ -108,10 +108,11 @@ public class MainActivity extends AppCompatActivity {
                         obj.getString("jarak"));
             } catch (JSONException e) {
                 e.printStackTrace();
+                Log.e("Question" + " " + i,
+                        "\nQuestion id = " + data.getStart() +
+                                " Question text = " + data.getDistance());
             }
-            Log.e("Question" + " " + i,
-                    "\nQuestion id = " + data.getStart() +
-                            " Question text = " + data.getDistance());
+
             datalist.add(data);
         }
         // notify data set change call missing
@@ -182,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject obj = null;
                     try {
                         obj = new JSONObject(jsondata);
+                        userArray.put(obj);
                         MyData temp=new MyData(obj.getString("timestart"),
                                 obj.getString("jarak"));
                         datalist.add(temp);
