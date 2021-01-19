@@ -25,13 +25,26 @@
             android:textColor="#000"
             android:textSize="18sp"
             android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/timekoment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="waktukoment"
-            android:textColor="#000"
-            android:textSize="15sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#0d0130"
+            android:layout_marginTop="10px"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Taken At: "/>
+            <TextView
+                android:id="@+id/timekoment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="waktukoment" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

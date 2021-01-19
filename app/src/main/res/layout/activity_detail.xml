@@ -90,19 +90,15 @@
                     android:textSize="15dp"
                     android:layout_marginBottom="15px"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#0d0130"
-                android:layout_marginLeft="10px"
-                android:layout_marginRight="10px"
-                android:layout_marginTop="10px"
-                android:layout_marginBottom="20px"/>
+
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10px"
+                android:layout_marginTop="30px"
+                android:layout_marginLeft="10px"
+                android:layout_marginRight="10px"
+                android:layout_marginBottom="10px"
                 android:textSize="18dp"
                 android:text="Comment"/>
             <View
@@ -117,11 +113,11 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerComment"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="15px" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerGambar"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15px" />
 
