@@ -112,7 +112,7 @@ public class DetailActivity extends FragmentActivity implements OnMapReadyCallba
         JSONArray komentar = null;
         JSONArray gambar = null;
         try {
-            komentar=new JSONArray(fulldata.get("koordinat").toString());
+            komentar=new JSONArray(fulldata.get("koment").toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -130,7 +130,7 @@ public class DetailActivity extends FragmentActivity implements OnMapReadyCallba
             }
         }
         try {
-            gambar=new JSONArray(fulldata.get("koordinat").toString());
+            gambar=new JSONArray(fulldata.get("gambar").toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -146,6 +146,8 @@ public class DetailActivity extends FragmentActivity implements OnMapReadyCallba
 
             }
         }
+        Log.d("gambar", gambarList.toString());
+        Log.d("komen", komenList.toString());
         AdapterKomen adapterKomen = new AdapterKomen(DetailActivity.this, komenList);
         AdapterPicture adapterPicture = new AdapterPicture(DetailActivity.this, gambarList);
 
