@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase dbku;
     private CustomAdapter.RecyclerViewClickListener listener;
     // ArrayList for person names, email Id's and mobile numbers
+    private double jarak_total;
     JSONArray userArray;
     ArrayList<String> total_step = new ArrayList<>();
     ArrayList<MyData> datalist= new ArrayList<>();
@@ -72,20 +73,23 @@ public class MainActivity extends AppCompatActivity {
             String str="";
             Cursor cur = dbku.rawQuery("select * from data",null);
             userArray = new JSONArray();
-
+            jarak_total=0.0;
             if(cur.getCount() >0)
             {
                 Toast.makeText(this,"Data Ditemukan Sejumlah " +
                         cur.getCount(),Toast.LENGTH_LONG).show();
                 cur.moveToFirst();
+
                 for(int i=0;i<cur.getCount();i++){
                     str = cur.getString(cur.getColumnIndex("j_son"));
                     JSONObject obj = new JSONObject(str);
+                    jarak_total+=Double.parseDouble(obj.getString("jarak"));
                     cur.moveToNext();
                     userArray.put(obj);
                 }
 
             }
+
 
 
         } catch (JSONException e) {
@@ -119,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         customAdapter.notifyDataSetChanged();
         TextView TextSteps;
         TextSteps = (TextView)findViewById(R.id.TextSteps);
-        // TextSteps.setText(String.valueOf(total_step));
+         TextSteps.setText(String.valueOf(jarak_total));
         Button record = (Button)findViewById(R.id.butRecord);
         record.setOnClickListener(operasi);
         // call the constructor of CustomAdapter to send the reference and data to Adapter

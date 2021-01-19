@@ -22,11 +22,12 @@
             android:textSize="30dp"
             android:id="@+id/TextSteps"
             android:textColor="#fff"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Steps"
-            android:textColor="#fff"/>
+            android:text="Distance passed"
+            android:textColor="#fff" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
